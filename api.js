@@ -8,7 +8,7 @@ app.get("/users", (req, res) => {
 app.post("/users", (req, res) => {
   res.json({ message: "User created" });
 });
-
+//trigger
 app.put("/users/:id", (req, res) => {
   res.json({ message: "User updated" });
 });
