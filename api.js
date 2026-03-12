@@ -4,7 +4,7 @@ const app = express();
 app.get("/users", (req, res) => {
   res.json({ users: [] });
 });
-
+//trigger
 app.post("/users", (req, res) => {
   res.json({ message: "User created" });
 });
