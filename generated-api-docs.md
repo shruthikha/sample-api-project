@@ -1,65 +1,58 @@
-### Analysis of provided backend source code
-
-The code is a basic Express.js app defining four API endpoints related to users.
+Here is the extracted API information and documentation based on the provided Node.js Express backend source code.
 
 ---
 
-## A) Clean API endpoint list
+## A) Clean API Endpoint List
 
-| HTTP Method | Path         | Description           | Path Parameters | Query Parameters | Request Body   | Response                   | Status Codes | Authentication |
-|-------------|--------------|----------------------|-----------------|------------------|----------------|----------------------------|--------------|----------------|
-| GET         | /users       | Get list of users    | None            | None             | None           | `{ users: Array }`          | 200          | None           |
-| POST        | /users       | Create a new user    | None            | None             | Not defined    | `{ message: "User created" }` | 200       | None           |
-| PUT         | /users/:id   | Update a user        | `id`            | None             | Not defined    | `{ message: "User updated" }` | 200       | None           |
-| DELETE      | /users/:id   | Delete a user        | `id`            | None             | None           | `{ message: "User deleted" }` | 200       | None           |
+| HTTP Method | Endpoint         | Description       | Path Parameters | Query Parameters | Request Body | Authentication |
+|-------------|------------------|-------------------|-----------------|------------------|--------------|----------------|
+| GET         | /users           | Fetch user list   | None            | None             | None         | None           |
+| POST        | /users           | Create a new user | None            | None             | None shown   | None           |
+| PUT         | /users/:id       | Update user by ID | id (string)     | None             | None shown   | None           |
+| DELETE      | /users/:id       | Delete user by ID | id (string)     | None             | None         | None           |
 
 ---
 
-## B) Short developer documentation
+## B) Short Developer Documentation
 
-### 1. GET /users  
-Fetches a list of users. Returns an empty array as per current implementation.
+### 1. GET /users
+Fetches a list of users.
 
-- **Response**: JSON object with key `users` containing an array.
-- **Status**: 200 OK
+- **Request**: No parameters, no body.
+- **Response**: JSON object containing `users` array (empty in current implementation).
+- **Status codes**: 200 OK
+- **Authentication**: None required.
+
+### 2. POST /users
+Creates a new user.
+
+- **Request**: No schema shown (likely expects JSON body with user details).
+- **Response**: JSON containing a message: `"User created"`.
+- **Status codes**: 200 OK.
+- **Authentication**: None required.
+
+### 3. PUT /users/:id
+Updates the user identified by the `id` URL parameter.
+
+- **Path Parameters**:
+  - `id`: User identifier.
+- **Request**: No schema shown (likely JSON body with fields to update).
+- **Response**: JSON containing a message: `"User updated"`.
+- **Status codes**: 200 OK.
+- **Authentication**: None required.
+
+### 4. DELETE /users/:id
+Deletes the user identified by the `id` URL parameter.
+
+- **Path Parameters**:
+  - `id`: User identifier.
+- **Response**: JSON containing a message: `"User deleted"`.
+- **Status codes**: 200 OK.
 - **Authentication**: None required.
 
 ---
 
-### 2. POST /users  
-Creates a new user (no request body schema defined currently). Returns a confirmation message.
-
-- **Request body**: Not defined in the code.
-- **Response**: JSON with message `User created`.
-- **Status**: 200 OK
-- **Authentication**: None required.
-
----
-
-### 3. PUT /users/:id  
-Updates user info for the provided user ID (no request body schema defined).  
-
-- **Path parameter**:
-  - `id` (string): User identifier
-- **Request body**: Not defined.
-- **Response**: JSON with message `User updated`.
-- **Status**: 200 OK
-- **Authentication**: None required.
-
----
-
-### 4. DELETE /users/:id  
-Deletes a user by ID.
-
-- **Path parameter**: 
-  - `id` (string): User identifier  
-- **Response**: JSON with message `User deleted`.
-- **Status**: 200 OK
-- **Authentication**: None required.
-
----
-
-## C) OpenAPI 3.0 YAML specification
+## C) OpenAPI 3.0 YAML Specification
 
 ```yaml
 openapi: 3.0.3
@@ -72,7 +65,7 @@ paths:
       summary: Get list of users
       responses:
         '200':
-          description: List of users
+          description: A list of users
           content:
             application/json:
               schema:
@@ -80,18 +73,21 @@ paths:
                 properties:
                   users:
                     type: array
-                    items: {}
+                    items:
+                      type: object
+                    example: []
     post:
       summary: Create a new user
       requestBody:
-        description: User data (not defined in code)
+        description: User data (not defined in source)
+        required: false
         content:
           application/json:
             schema:
               type: object
       responses:
         '200':
-          description: Confirmation message
+          description: User created successfully
           content:
             application/json:
               schema:
@@ -102,23 +98,24 @@ paths:
                     example: User created
   /users/{id}:
     put:
-      summary: Update a user
+      summary: Update an existing user
       parameters:
-        - in: path
-          name: id
+        - name: id
+          in: path
+          required: true
           schema:
             type: string
-          required: true
           description: User ID
       requestBody:
-        description: Updated user data (not defined)
+        description: Fields to update (not defined)
+        required: false
         content:
           application/json:
             schema:
               type: object
       responses:
         '200':
-          description: Confirmation message
+          description: User updated successfully
           content:
             application/json:
               schema:
@@ -130,15 +127,15 @@ paths:
     delete:
       summary: Delete a user
       parameters:
-        - in: path
-          name: id
+        - name: id
+          in: path
+          required: true
           schema:
             type: string
-          required: true
           description: User ID
       responses:
         '200':
-          description: Confirmation message
+          description: User deleted successfully
           content:
             application/json:
               schema:
@@ -151,16 +148,19 @@ paths:
 
 ---
 
-## D) Example request and response
+## D) Example Request and Response
 
-### Example 1: GET /users
+### GET /users
 
-**Request:**  
+**Request**
+
 ```
-GET /users
+GET /users HTTP/1.1
+Host: example.com
 ```
 
-**Response:**  
+**Response**
+
 ```json
 {
   "users": []
@@ -169,19 +169,23 @@ GET /users
 
 ---
 
-### Example 2: POST /users
+### POST /users
 
-**Request:**  
+**Request**
+
 ```
-POST /users
+POST /users HTTP/1.1
+Host: example.com
 Content-Type: application/json
 
 {
-  "name": "John Doe"
+  "name": "John Doe",
+  "email": "john@example.com"
 }
 ```
 
-**Response:**  
+**Response**
+
 ```json
 {
   "message": "User created"
@@ -190,19 +194,22 @@ Content-Type: application/json
 
 ---
 
-### Example 3: PUT /users/123
+### PUT /users/123
 
-**Request:**  
+**Request**
+
 ```
-PUT /users/123
+PUT /users/123 HTTP/1.1
+Host: example.com
 Content-Type: application/json
 
 {
-  "name": "John Smith"
+  "email": "newemail@example.com"
 }
 ```
 
-**Response:**  
+**Response**
+
 ```json
 {
   "message": "User updated"
@@ -211,14 +218,17 @@ Content-Type: application/json
 
 ---
 
-### Example 4: DELETE /users/123
+### DELETE /users/123
 
-**Request:**  
+**Request**
+
 ```
-DELETE /users/123
+DELETE /users/123 HTTP/1.1
+Host: example.com
 ```
 
-**Response:**  
+**Response**
+
 ```json
 {
   "message": "User deleted"
@@ -227,35 +237,35 @@ DELETE /users/123
 
 ---
 
-## Mermaid sequence diagram
+## Mermaid Sequence Diagram
 
 ```mermaid
 sequenceDiagram
-  participant Client
-  participant Server
-  participant Database
+    participant Client
+    participant Server
+    participant Database
 
-  Client->>Server: GET /users
-  Server->>Database: Query users
-  Database-->>Server: Return users (empty array)
-  Server-->>Client: Respond { users: [] }
+    Client->>Server: GET /users
+    Server->>Database: Query all users
+    Database-->>Server: Return user list
+    Server-->>Client: 200 OK + { users: [...] }
 
-  Client->>Server: POST /users\n{user data}
-  Server->>Database: Insert new user
-  Database-->>Server: Confirmation
-  Server-->>Client: Respond { message: "User created" }
+    Client->>Server: POST /users + new user data
+    Server->>Database: Insert new user
+    Database-->>Server: Confirmation
+    Server-->>Client: 200 OK + { message: "User created" }
 
-  Client->>Server: PUT /users/:id\n{user data}
-  Server->>Database: Update user with id
-  Database-->>Server: Confirmation
-  Server-->>Client: Respond { message: "User updated" }
+    Client->>Server: PUT /users/:id + updated data
+    Server->>Database: Update user by id
+    Database-->>Server: Confirmation
+    Server-->>Client: 200 OK + { message: "User updated" }
 
-  Client->>Server: DELETE /users/:id
-  Server->>Database: Delete user with id
-  Database-->>Server: Confirmation
-  Server-->>Client: Respond { message: "User deleted" }
+    Client->>Server: DELETE /users/:id
+    Server->>Database: Delete user by id
+    Database-->>Server: Confirmation
+    Server-->>Client: 200 OK + { message: "User deleted" }
 ```
 
 ---
 
-**Note:** Authentication is not implemented in the code. Also, request bodies for POST and PUT endpoints are not explicitly validated or defined.
+If you need further details or additions, please let me know!
