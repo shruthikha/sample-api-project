@@ -1,1 +1,1 @@
-The provided input is metadata about a README.md file in a GitHub repo, not backend source code. Please provide the actual backend source code files (such as controller files, route definitions, or similar) so I can analyze the API endpoints and generate the requested documentation.
+The input does not contain any backend source code. Please provide the backend source code so I can analyze and extract the API information as requested.
