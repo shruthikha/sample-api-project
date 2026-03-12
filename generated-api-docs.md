@@ -1,1 +1,2 @@
-The input does not contain any backend source code. Please provide the backend source code so I can analyze and extract the API information as requested.
+The input does not contain any backend source code to analyze.  
+Please provide the backend source code so that I can extract the required API information and generate the documentation accordingly.
