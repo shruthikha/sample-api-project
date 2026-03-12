@@ -6,3 +6,6 @@ GET /users
 POST /users
 PUT /users/{id}
 DELETE /users/{id}
+API endpoint example:
+GET /products
+POST /products
