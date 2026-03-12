@@ -1,3 +1,3 @@
-The provided input contains “[object Object]” instead of backend source code. 
+The input you provided is not actual backend source code but rather a placeholder "[object Object]". Therefore, I cannot analyze it or extract any API information.
 
-Please provide the actual backend source code so I can analyze it and extract the API information as requested.
+Please provide the backend source code or relevant code snippets to proceed with the analysis and API documentation generation.
